@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 import { getRecords } from '../utils/Table';
 import { Header } from '../components/Header';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+  body{
+    margin: 0;
+    padding: 0;
+  }
+`;
 
 export default function Home() {
 
@@ -9,8 +17,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <Header/>
+    <div className="App">
+      <GlobalStyle/>
+        <Header/>
     </div>
   )
 }
