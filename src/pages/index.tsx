@@ -1,7 +1,6 @@
-import Head from 'next/head';
-import Image from 'next/image';
 import { useEffect } from 'react';
 import { getRecords } from '../utils/Table';
+import { Header } from '../components/Header';
 
 export default function Home() {
 
@@ -11,7 +10,7 @@ export default function Home() {
 
   return (
     <div>
-      <h1>Hello World!</h1>
+      <Header/>
     </div>
   )
 }
