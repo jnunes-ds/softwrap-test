@@ -1,11 +1,16 @@
 import styled from "styled-components"
+import Link from 'next/link';
 
 export function Header(){
     return (
         <TopBar>
             <div className="buttons">
-                <a href="#">Visualizar</a>
-                <a href="#">Novo Cadastro</a>
+                <Link href="/">
+                    <a>Visualizar</a>
+                </Link>
+                <Link href="/NewRegister">
+                    <a>Novo Cadastro</a>
+                </Link>
             </div>
         </TopBar>
     )
@@ -35,5 +40,10 @@ const TopBar = styled.section`
 
     a:hover{
         background-color: #16171e;
+        cursor: pointer;
+    }
+    
+    .link:active{
+        background-color: red;
     }
 `;
