@@ -114,7 +114,8 @@ const Container = styled.section`
       }
 
       .tableFooter{
-        border: 1px solid black
+        padding: 10px;
+        border-top: 1px solid black;
       }
     }
   }
