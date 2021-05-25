@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { firestore } from '../utils/firebase';
+import Button from '../components/Button';
 
 
 
@@ -40,14 +41,17 @@ export default function Home() {
         </div>
         <div className="tableContainer">
           <table>
-            <tr className="tableHeader">
-              <td>NOME</td>
-              <td>IDADE</td>
-              <td>ESTADO CIVIL</td>
-              <td>CPF</td>
-              <td>CIDADE</td>
-              <td>ESTADO</td>
-            </tr>
+            <thead>
+              <tr>
+                <td>NOME</td>
+                <td>IDADE</td>
+                <td>ESTADO CIVIL</td>
+                <td>CPF</td>
+                <td>CIDADE</td>
+                <td>ESTADO</td>
+              </tr>
+            </thead>
+            <tbody>
             {
               registers.map(register => {
                 return(
@@ -63,15 +67,22 @@ export default function Home() {
                 );
               })
             }
-            <tr className="tableFooter">
-              <td>Mostrando 1 até 6 de 20 resultados</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><button>Anterior</button></td>
-              <td><button>Próximo</button></td>
-            </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Mostrando 1 até 6 de 20 resultados</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <Button name="Anterior" />
+                </td>
+                <td>
+                  <Button name="Próximo"/>
+                </td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>
@@ -93,7 +104,7 @@ const Container = styled.section`
       border-bottom: 2px solid #D7D7D7;
       border-radius: 10px;
 
-      .tableHeader{
+      thead{
         font-size: .75rem;
         text-align: start;
         td{
@@ -113,9 +124,17 @@ const Container = styled.section`
         color: black
       }
 
-      .tableFooter{
+      tbody{
+        
+      }
+
+      tfoot{
         padding: 10px;
-        border-top: 1px solid black;
+        tr{
+          td{
+            border-top: 1px outset #E8E8E8;
+          }
+        }
       }
     }
   }
