@@ -36,7 +36,7 @@ export default function Home() {
   return (
     <Container>
       <div className="App">
-        <div>
+        <div className="Titulo">
           <h1>Visualizar Cadastros</h1>
         </div>
         <div className="tableContainer">
@@ -91,6 +91,14 @@ export default function Home() {
 }
 
 const Container = styled.section`
+  .Titulo{
+    border: 1px solid #E8E8E8;
+    h1{
+      font-size: 2rem;
+      margin-left: 15rem;
+    }
+  }
+  
   .tableContainer{
     display: flexbox;
     align-items: center;
