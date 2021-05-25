@@ -17,6 +17,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
   }
+  
 
   .buttonsContainer{
     display: flexbox;
@@ -49,6 +50,14 @@ const GlobalStyle = createGlobalStyle`
 
     a:active{
       background-color: #16171e;
+    }
+  }
+
+  .Titulo{
+    border: 1px solid #E8E8E8;
+    h1{
+      font-size: 2rem;
+      margin-left: 15rem;
     }
   }
 `;

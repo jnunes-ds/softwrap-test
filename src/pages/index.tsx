@@ -91,13 +91,6 @@ export default function Home() {
 }
 
 const Container = styled.section`
-  .Titulo{
-    border: 1px solid #E8E8E8;
-    h1{
-      font-size: 2rem;
-      margin-left: 15rem;
-    }
-  }
   
   .tableContainer{
     display: flexbox;
