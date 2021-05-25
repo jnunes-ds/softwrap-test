@@ -1,34 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Esse é um projeto [Next.js](https://nextjs.org/).
 
-## Getting Started
+## Inicie com
 
-First, run the development server:
+Primeiro faça o clone do repositório com
+```bash
+git clone 'https://github.com/jnunes-ds/softwrap-test.git'
+# Ou crie seu próprio repositório e depois vincule-o ao repositório atual
+git remote add origin 'https://github.com/jnunes-ds/softwrap-test.git'
+git pull
+```
+Depois, abra o terminal na página local do seu repositório e rode o comando:
+
+```bash
+npm install
+# ou
+yarn install
+```
+
+Por último, rode o servidor de desenvolvimento:
 
 ```bash
 npm run dev
-# or
+# ou
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) wcom o seu Browser para ver o resultado.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+-------------------------
+## Relatório:
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+#### Objetivo
+O objetivo dessa aplicação é mostrar consumir dados do <b>firestore</b> bem como alterar, acrescentar e apagar esses dados.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Os dados fornecidos pelo firestore são objetos contendo as seguintes informações:
 
-## Learn More
+>>Nome;
+Idade;
+Estado Civil;
+CPF;
+Cidade;
+Estado.
 
-To learn more about Next.js, take a look at the following resources:
+Exceto pela idade que é um number, todos os outros elementos são strings, o que resulta na tipagem abaixo:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+```typescript
+    {
+        Name: string;
+        Age: number;
+        MaritalStatus: string;
+        CPF: string;
+        City: string;
+        State: string;
+    }
+```
+#### Execução
 
-## Deploy on Vercel
+O aplicativo foi iniciado com o comando:
+```bash
+yarn create next-app
+```
+O <b>yarn</b> foi o gerenciador de pacotes usado durante todo o processo.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Afim de ter maior organização e controle sobre os elementos a serem trabalhados optei pela utilização do typescript (Sempre como ferramenta de desenvolvimento).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Além disso houve a instalação das dependências Firebase, para a utilização do firestore e do styled-components (<i>E seus devitos <u>types</u></i>) para efetuar a estilização das páginas e dos seus componentes.
+
+Devido ao comportamento de navegação peculiar do NextJS, a página pincipal que exibe todos os arquivos fica no próprio <b>index.tsx</b> e não numa página separada (<i>provavelmente</i>) <b>All.tsx</b> como faria se fosse utilizando o react-router.
+
+## ...Em produção...
