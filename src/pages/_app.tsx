@@ -2,6 +2,16 @@ import { Header } from "../components/Header";
 import { createGlobalStyle } from 'styled-components';
 
 
+function MyApp({ Component, pageProps }) {
+  return (
+    <div>
+      <GlobalStyle/>
+      <Header/>
+      <Component {...pageProps} />
+    </div>
+  );
+}
+
 const GlobalStyle = createGlobalStyle`
   body{
     margin: 0;
@@ -36,22 +46,11 @@ const GlobalStyle = createGlobalStyle`
         background-color: #16171e;
         cursor: pointer;
     }
-    
-    .link:active{
-        background-color: red;
+
+    a:active{
+      background-color: #16171e;
     }
   }
 `;
-
-
-function MyApp({ Component, pageProps }) {
-  return (
-    <div>
-      <GlobalStyle/>
-      <Header/>
-      <Component {...pageProps} />
-    </div>
-  );
-}
 
 export default MyApp
