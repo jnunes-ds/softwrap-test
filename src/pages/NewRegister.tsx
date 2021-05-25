@@ -1,9 +1,18 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import styled from "styled-components";
 import Button from '../components/Button';
+import { IRegisters } from './index';
 
 
 export default function (){
+    const [newRegister, setNewRegister] = useState<IRegisters>();
+    const [name, setName] = useState('');
+    const [age, setAge] = useState(0);
+    const [maritalStatus, setMaritalStatus] = useState('');
+    const [cpf, setCpf] = useState('');
+    const [city, setCity] = useState('');
+    const [regionState, setRegionState] = useState('');
+
     return (
         <Fragment>
             <div className="Titulo">
@@ -11,11 +20,14 @@ export default function (){
             </div>
             <Container>
                 <div className="registerContainer">
+
                     <div className="registerSubtitle">
                         <h3>Informações pessoais</h3>
                         <p>Adicione aqui as informações da nova pesoa.</p>
                     </div>
+
                     <div className="registerForms">
+
                         <div className="form formName">
                             <label>Nome</label>
                             <input name="name" type="text" placeholder="Digite o nome"/>
@@ -52,7 +64,9 @@ export default function (){
                                 name="Cadastrar"
                             />
                         </div>
+
                     </div>
+
                 </div>
             </Container>
         </Fragment>
@@ -78,9 +92,19 @@ const Container = styled.section`
         height: 80vh;
 
         .registerSubtitle{
+            display: flex;
+            height: 60%;
+            flex-direction: column;
+            justify-content: flex-start;
             padding: 10px;
             h3{
-                margin: 0
+                margin: 0;
+                padding: 0;
+            }
+            p{
+                margin: 0;
+                padding: 0;
+                color: #B5B5B5
             }
         }
 
@@ -100,11 +124,13 @@ const Container = styled.section`
                 display: flex;
                 flex-direction: column;
                 margin-bottom: .75rem;
+                padding: .5rem;
 
                 input{
                     height: 2rem;
                     border-radius: 10px;
-                    border: 1px solid #D7D7D7
+                    border: 1px solid #D7D7D7;
+                    padding: 0%.5rem;
                 }
             }
 

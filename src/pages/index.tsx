@@ -4,10 +4,30 @@ import styled from 'styled-components';
 import { firestore } from '../utils/firebase';
 import Button from '../components/Button';
 
+export interface IRegisters{
+  Name: string;
+  Age: Number;
+  MaritalStatus: string;
+  CPF: string;
+  City: string;
+  State: string;
+  ID: string;
+}
 
+const InitialRegisters: IRegisters[] = [
+  {
+    Name: '',
+    Age: 0,
+    MaritalStatus: '',
+    CPF: '',
+    City: '',
+    State: '',
+    ID: ''
+  }
+];
 
 export default function Home() {
-  const [registers, setRegisters] = useState([]);
+  const [registers, setRegisters] = useState<IRegisters[]>(InitialRegisters);
   const [loading, setLoading] = useState(false);
 
   const ref = firestore.collection("tabela");
@@ -55,7 +75,7 @@ export default function Home() {
             {
               registers.map(register => {
                 return(
-                  <tr key={register.id}>
+                  <tr key={register.ID}>
                     <td className="name">{register.Name}</td>
                     <td>{register.Age}</td>
                     <td>{register.MaritalStatus}</td>
