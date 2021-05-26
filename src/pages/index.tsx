@@ -34,7 +34,7 @@ export default function Home() {
 
   const ref = firestore.collection("tabela");
 
-  function makeVisibleList(){
+  function makeAVisibleList(){
     //Criando lista temporária com uma fração do estado
     //"registers"
     let tempVisibleList = createNewVisibleRegistersList();
@@ -70,9 +70,30 @@ export default function Home() {
     });
   }
 
+  function previousPage(){
+    let previous = currentIndex - 6;
+    if((currentIndex - 6) <= 0){
+      setCurrentIndex(0);
+    }else{
+      setCurrentIndex(previous);
+    }
+    makeAVisibleList();
+  }
+
+  function nextPage(){
+    let max = registers.length - 6;
+    let next = currentIndex + 6;
+    if((currentIndex + 6) >= max){
+      setCurrentIndex(max);
+    }else{
+      setCurrentIndex(next);
+    }
+    makeAVisibleList();
+  }
+
 
   useEffect(() => {
-    makeVisibleList();
+    makeAVisibleList();
   }, []);
 
   if(loading){
@@ -116,16 +137,22 @@ export default function Home() {
             </tbody>
             <tfoot>
               <tr>
-                <td>Mostrando 1 até 6 de {registers.length} resultados</td>
+                <td>Mostrando {currentIndex} até {currentIndex + 6} de {registers.length} resultados</td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
-                  <Button name="Anterior" />
+                  <Button 
+                    onClick={previousPage}
+                    name="Anterior" 
+                  />
                 </td>
                 <td>
-                  <Button name="Próximo"/>
+                  <Button 
+                    onClick={nextPage}
+                    name="Próximo"
+                  />
                 </td>
               </tr>
             </tfoot>
