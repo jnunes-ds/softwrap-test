@@ -20,7 +20,6 @@ export default function (){
 
     function postNewRegister(){
         const newRegister = createNewRegister();
-        console.log(newRegister)
         if(newRegister && newRegister != undefined){
           ref
             .doc(newRegister.ID)
