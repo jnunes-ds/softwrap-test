@@ -28,9 +28,22 @@ const InitialRegisters: IRegisters[] = [
 
 export default function Home() {
   const [registers, setRegisters] = useState<IRegisters[]>(InitialRegisters);
+  const [visibleRegistersList, setVisibleRegistersList] = useState<IRegisters[]>();
   const [loading, setLoading] = useState(false);
 
   const ref = firestore.collection("tabela");
+
+  function makeVisibleList(){
+    let visibleList = createNewVisibleRegistersList();
+
+    setVisibleRegistersList(visibleList);
+  }
+
+  function createNewVisibleRegistersList(){
+    getRegisters();
+    let visibleList = registers.slice(0, 6);
+    return visibleList;
+  }
 
   function getRegisters(){
     setLoading(true);
@@ -44,8 +57,9 @@ export default function Home() {
     });
   }
 
+
   useEffect(() => {
-    getRegisters();
+    makeVisibleList();
   }, []);
 
   if(loading){
@@ -72,7 +86,7 @@ export default function Home() {
             </thead>
             <tbody>
             {
-              registers.map(register => {
+              visibleRegistersList.map(register => {
                 return(
                   <tr key={register.ID}>
                     <td className="name">{register.Name}</td>
