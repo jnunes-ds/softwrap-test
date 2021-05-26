@@ -28,31 +28,44 @@ const InitialRegisters: IRegisters[] = [
 
 export default function Home() {
   const [registers, setRegisters] = useState<IRegisters[]>(InitialRegisters);
-  const [visibleRegistersList, setVisibleRegistersList] = useState<IRegisters[]>();
+  const [visibleRegistersList, setVisibleRegistersList] = useState<IRegisters[]>(InitialRegisters);
   const [loading, setLoading] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const ref = firestore.collection("tabela");
 
   function makeVisibleList(){
-    let visibleList = createNewVisibleRegistersList();
+    //Criando lista temporária com uma fração do estado
+    //"registers"
+    let tempVisibleList = createNewVisibleRegistersList();
 
-    setVisibleRegistersList(visibleList);
+    //Adicionando o conteúdo da lista a um novo estado.
+    setVisibleRegistersList(tempVisibleList);
   }
 
+  //Retornando um um trecho do estado "registers"
   function createNewVisibleRegistersList(){
+    //Atualizando informações do estado
     getRegisters();
-    let visibleList = registers.slice(0, 6);
-    return visibleList;
+    // Criando lista clone temporária
+    let tempVisibleList = registers;
+    //Retornando uma fração dessa lista
+    return tempVisibleList.slice(currentIndex, currentIndex+6);
   }
 
+  //Armazenando TODOS os dados em um estado "registers"
   function getRegisters(){
+    //Forçando renderização
     setLoading(true);
+    // guardando dados do firestore em lista temporária 
     ref.onSnapshot((querySnapshot) => {
-      const items = [];
+      const tempList = [];
       querySnapshot.forEach((doc) => {
-        items.push(doc.data());
+        tempList.push(doc.data());
       });
-      setRegisters(items);
+      //Setando estado registers com lista temporária
+      setRegisters(tempList);
+      //Forçando renderização
       setLoading(false);
     });
   }
