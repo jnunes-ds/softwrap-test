@@ -27,6 +27,7 @@ export default function (){
             .catch(err => {
                 console.log(err)
             });
+            cleanInputs();
         }
             
     }
@@ -44,6 +45,15 @@ export default function (){
         };
 
         return aNewRegister;
+    }
+
+    function cleanInputs(){
+        setName('');
+        setAge(0);
+        setMaritalStatus('Solteio(a)');
+        setCpf('');
+        setCity('');
+        setRegionState('AC');
     }
 
     return (
