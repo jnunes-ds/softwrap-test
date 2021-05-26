@@ -3,10 +3,12 @@ import styled from "styled-components";
 import Button from '../components/Button';
 import { IRegisters } from './index';
 import { v4 as uuidv4} from 'uuid';
+import { firestore } from "../utils/firebase";
+import { callbackify } from "util";
 
 
 export default function (){
-    const [newRegister, setNewRegister] = useState<IRegisters>();
+    // const [newRegister, setNewRegister] = useState<IRegisters>();
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
     const [maritalStatus, setMaritalStatus] = useState('Solteiro(a)');
@@ -14,8 +16,24 @@ export default function (){
     const [city, setCity] = useState('');
     const [regionState, setRegionState] = useState('AC');
 
+    const ref = firestore.collection("tabela");
+
+    function postNewRegister(){
+        const newRegister = createNewRegister();
+        console.log(newRegister)
+        if(newRegister && newRegister != undefined){
+          ref
+            .doc(newRegister.ID)
+            .set(newRegister)
+            .catch(err => {
+                console.log(err)
+            });
+        }
+            
+    }
 
     function createNewRegister(){
+        let newId = uuidv4();
         let aNewRegister: IRegisters = {
             Name: name,
             Age: age,
@@ -23,10 +41,10 @@ export default function (){
             CPF: cpf,
             City: city,
             State: regionState,
-            ID: uuidv4()
+            ID: newId
         };
 
-        setNewRegister(aNewRegister);
+        return aNewRegister;
     }
 
     return (
@@ -140,7 +158,7 @@ export default function (){
                                     bgHover: 'green',
                                     borderHover: '1px solid green'
                                 }}
-                                onClick={createNewRegister}
+                                onClick={postNewRegister}
                                 name="Cadastrar"
                             />
                         </div>
