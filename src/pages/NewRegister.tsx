@@ -13,7 +13,18 @@ export default function (){
     const [city, setCity] = useState('');
     const [regionState, setRegionState] = useState('AC');
 
-    
+    function createNewRegister(){
+        let aNewRegister: IRegisters = {
+            Name: name,
+            Age: age,
+            MaritalStatus: maritalStatus,
+            CPF: cpf,
+            City: city,
+            State: regionState,
+            ID: ''
+        };
+    }
+
     return (
         <Fragment>
             <div className="Titulo">
