@@ -89,7 +89,7 @@ export default function Home() {
             </tbody>
             <tfoot>
               <tr>
-                <td>Mostrando 1 até 6 de 20 resultados</td>
+                <td>Mostrando 1 até 6 de {registers.length} resultados</td>
                 <td></td>
                 <td></td>
                 <td></td>
