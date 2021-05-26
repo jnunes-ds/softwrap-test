@@ -8,11 +8,12 @@ export default function (){
     const [newRegister, setNewRegister] = useState<IRegisters>();
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
-    const [maritalStatus, setMaritalStatus] = useState('');
+    const [maritalStatus, setMaritalStatus] = useState('Solteiro(a)');
     const [cpf, setCpf] = useState('');
     const [city, setCity] = useState('');
-    const [regionState, setRegionState] = useState('');
+    const [regionState, setRegionState] = useState('AC');
 
+    
     return (
         <Fragment>
             <div className="Titulo">
@@ -30,27 +31,90 @@ export default function (){
 
                         <div className="form formName">
                             <label>Nome</label>
-                            <input name="name" type="text" placeholder="Digite o nome"/>
+                            <input
+                                value={name} 
+                                onChange={event => setName(event.target.value)}
+                                name="name" 
+                                type="text" 
+                                placeholder="Digite o nome"
+                            />
                         </div>
                         <div className="form formAge">
                             <label>Idade</label>
-                            <input name="Age" type="number" placeholder="Dgite a idade em anos"/>
+                            <input 
+                                value={age}
+                                onChange={event => setAge(Number(event.target.value))}
+                                name="Age" 
+                                type="number" 
+                                placeholder="Dgite a idade em anos"
+                            />
                         </div>
                         <div className="form formMS">
                             <label>Estado Civil</label>
-                            <input name="name" type="text" />
+                            <select
+                                value={maritalStatus} 
+                                onChange={event => setMaritalStatus(event.target.value)}
+                            >
+                                <option value="Solteiro(a)">Solteiro(a)</option>
+                                <option value="Casado(a)">Casado(a)</option>
+                                <option value="Viúvo(a)">Viúvo(a)</option>
+                                <option value="Divorciado(a)">Divorciado(a)</option>
+                            </select>
                         </div>
                         <div className="form formCPF">
                             <label>CPF</label>
-                            <input name="CPF" type="text" placeholder="000.000.000-00"/>
+                            <input
+                                value={cpf}
+                                onChange={event => setCpf(event.target.value)}
+                                name="CPF" 
+                                type="text" 
+                                placeholder="000.000.000-00"
+                            />
                         </div>
                         <div className="form formCity">
                             <label>Cidade</label>
-                            <input name="name" type="text" placeholder="Digite o nome da sua cidade"/>
+                            <input
+                                value={city}
+                                onChange={event => event.target.value} 
+                                name="name" 
+                                type="text" 
+                                placeholder="Digite o nome da cidade"
+                            />
                         </div>
                         <div className="form formState">
                             <label>Estado</label>
-                            <input name="name" type="text"/>
+                            <select
+                                value={regionState}
+                                onChange={event => setRegionState(event.target.value)}
+                            >
+                                <option value="AC">Acre (AC)</option>
+                                <option value="AL">Alagoas (AL)</option>
+                                <option value="AP">Amapá (AP)</option>
+                                <option value="AM">Amazonal (AM)</option>
+                                <option value="BA">Bahia (BA)</option>
+                                <option value="CE">Ceará (CE)</option>
+                                <option value="DF">Distrito Federal (DF)</option>
+                                <option value="ES">Espírito Santo (ES)</option>
+                                <option value="GO">Goiás (GO)</option>
+                                <option value="MA">Maranhão (MA)</option>
+                                <option value="MT">Mato Grosso (MT)</option>
+                                <option value="MS">Mato Grosso do Sul (MS)</option>
+                                <option value="MG">Minas Gerais (MG)</option>
+                                <option value="PA">Pará (PA)</option>
+                                <option value="PB">Paraíba (PB)</option>
+                                <option value="PR">Paraná (PR)</option>
+                                <option value="PE">Pernambuco (PE)</option>
+                                <option value="PI">Piauí (PI)</option>
+                                <option value="RJ">Rio de Janeiro (RJ)</option>
+                                <option value="RN">Rio Grande do Norte (RN)</option>
+                                <option value="RS">Rio Grande do Sul (RS)</option>
+                                <option value="RO">Rondônia (RO)</option>
+                                <option value="RR">Roraima (RR)</option>
+                                <option value="SC">Santa Catarina (SC)</option>
+                                <option value="SP">São Paulo (SP)</option>
+                                <option value="SE">Sergipe (SE)</option>
+                                <option value="TO">Tocantins (TO)</option>
+                            </select>
                         </div>
                         <div className="btn">
                             <Button 
@@ -61,6 +125,7 @@ export default function (){
                                     bgHover: 'green',
                                     borderHover: '1px solid green'
                                 }}
+                                onClick={() => console.log(regionState)}
                                 name="Cadastrar"
                             />
                         </div>
@@ -131,6 +196,14 @@ const Container = styled.section`
                     border-radius: 10px;
                     border: 1px solid #D7D7D7;
                     padding: 0%.5rem;
+                }
+
+                select{
+                    height: 2rem;
+                    border-radius: 10px;
+                    border: 1px solid #D7D7D7;
+                    padding: 0%.5rem;
+                    background: transparent;
                 }
             }
 

@@ -40,7 +40,6 @@ export default function Home() {
         items.push(doc.data());
       });
       setRegisters(items);
-      console.log(registers)
       setLoading(false);
     });
   }
