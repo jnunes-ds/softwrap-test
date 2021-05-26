@@ -2,6 +2,7 @@ import { Fragment, useState } from "react";
 import styled from "styled-components";
 import Button from '../components/Button';
 import { IRegisters } from './index';
+import { v4 as uuidv4} from 'uuid';
 
 
 export default function (){
@@ -13,6 +14,7 @@ export default function (){
     const [city, setCity] = useState('');
     const [regionState, setRegionState] = useState('AC');
 
+
     function createNewRegister(){
         let aNewRegister: IRegisters = {
             Name: name,
@@ -21,8 +23,10 @@ export default function (){
             CPF: cpf,
             City: city,
             State: regionState,
-            ID: ''
+            ID: uuidv4()
         };
+
+        setNewRegister(aNewRegister);
     }
 
     return (
@@ -86,7 +90,7 @@ export default function (){
                             <label>Cidade</label>
                             <input
                                 value={city}
-                                onChange={event => event.target.value} 
+                                onChange={event => setCity(event.target.value)} 
                                 name="name" 
                                 type="text" 
                                 placeholder="Digite o nome da cidade"
@@ -136,7 +140,7 @@ export default function (){
                                     bgHover: 'green',
                                     borderHover: '1px solid green'
                                 }}
-                                onClick={() => console.log(regionState)}
+                                onClick={createNewRegister}
                                 name="Cadastrar"
                             />
                         </div>
