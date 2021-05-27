@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from '../components/Button';
 import { IRegisters } from '../types/IRegister';
@@ -21,8 +21,6 @@ export default function (){
     const [showDangerAlert, setShowDangerAlert] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-    const ref = firestore.collection("tabela");
-
     function sendPost(){
         let checkInputs = checkInputValues();
 
@@ -34,6 +32,8 @@ export default function (){
         const newRegister = createNewRegister();
             
         postNewRegister(newRegister);
+
+        setShowSuccessAlert(true);
             
         cleanInputs();
             
@@ -88,9 +88,11 @@ export default function (){
         (!cpf || cpf == '') && numberOfErrors++;
         (!city || city == '') && numberOfErrors++;
 
+        (numberOfErrors == 0) && setShowDangerAlert(false);
+
         return (
             <>    
-                <h6>Existe(m) {numberOfErrors} erro(s) ao adicionar uma nova pessoa.</h6>
+                <h6> ❌ Existe(m) {numberOfErrors} erro(s) ao adicionar uma nova pessoa.</h6>
                 <ul>
     
                     {(!name || name == '') && <li>O campo Nome é obrigatório</li>}
@@ -102,6 +104,19 @@ export default function (){
             </>
         );
     }
+
+    useEffect(() => {
+        if(showDangerAlert){
+            setTimeout(() => {
+                setShowDangerAlert(false);
+            }, 5000)
+        }
+        if(showSuccessAlert){
+            setTimeout(() => {
+                setShowSuccessAlert(false);
+            }, 5000)
+        }
+    }, [showDangerAlert, showSuccessAlert]);
 
 
     return (
@@ -116,19 +131,21 @@ export default function (){
                     className="alert dangerAlert"
                     variant="danger"
                    >
-                        <DangerAlertContent/>
+                       <div>
                         <button 
                             type="button" 
                             className="btn-close" 
                             aria-label="Close alert"
                             onClick={() => setShowDangerAlert(false)}
                         ></button>
+                        </div>
+                        <DangerAlertContent/>
                     </Alert>
                 }
                 {
                     showSuccessAlert
                     && <Alert className="alert successAlert" variant="success">
-                            Cadastro realizado com sucesso!
+                            ✅ Cadastro realizado com sucesso!
                             <div>
                                 <button 
                                     type="button" 
@@ -243,7 +260,7 @@ export default function (){
                                     bgHover: 'green',
                                     borderHover: '1px solid green'
                                 }}
-                                onClick={() => setShowSuccessAlert(true)}
+                                onClick={sendPost   }
                                 name="Cadastrar"
                             />
                         </div>
