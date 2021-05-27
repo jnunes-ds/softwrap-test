@@ -74,6 +74,7 @@ export default function Home() {
           <h1>Visualizar Cadastros</h1>
         </div>
         <div className="tableContainer">
+          <div className="container">
           <table>
             <thead>
               <tr>
@@ -192,6 +193,7 @@ export default function Home() {
               </tr>
             </tfoot>
           </table>
+          </div>
         </div>
       </div>
     </Container>
@@ -199,49 +201,53 @@ export default function Home() {
 }
 
 const Container = styled.section`
-  
   .tableContainer{
     display: flexbox;
     align-items: center;
     justify-content: center;
     height: 80vh;
+    border-radius: 50%;
 
-    table{
-      align-items: flex-start;
-      padding: .5rem;
+    .container{
+      border-radius: 20px;
       border: 1px solid #E8E8E8;
       border-bottom: 2px solid #D7D7D7;
-      border-radius: 10px;
 
-      thead{
-        font-size: .75rem;
-        text-align: start;
-        td{
-          margin-top: 0;
-          padding-bottom: 10px;
+      table{
+        align-items: flex-start;
+        padding: .5rem;
+        width: 100%;
+
+        thead{
+          font-size: .75rem;
+          text-align: start;
+          td{
+            margin-top: 0;
+            padding-bottom: 10px;
+          }
         }
-      }
-      
-      tr{
-        td{
-          color: #A3A3A3;
-          padding: 10px;
-        }
-      }
-
-      .name{
-        color: black
-      }
-
-      tbody{
         
-      }
-
-      tfoot{
-        padding: 10px;
         tr{
           td{
-            border-top: 1px outset #E8E8E8;
+            color: #A3A3A3;
+            padding: 10px;
+          }
+        }
+
+        .name{
+          color: black
+        }
+
+        tbody{
+          
+        }
+
+        tfoot{
+          padding: 10px;
+          tr{
+            td{
+              border-top: 1px outset #E8E8E8;
+            }
           }
         }
       }
