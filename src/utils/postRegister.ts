@@ -1,4 +1,6 @@
-import { ref } from "./firebase";
+import { firestore } from "./firebase";
+
+const ref = firestore.collection("tabela");
 
 export function postNewRegister(newRegister){
     if(newRegister && newRegister != undefined){

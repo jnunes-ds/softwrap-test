@@ -20,12 +20,35 @@ export default function (){
     const ref = firestore.collection("tabela");
 
     function sendPost(){
+        let checkInputs = checkInputValues();
+
+        if(!checkInputs){
+            return alert('Pegou?');
+        }
         const newRegister = createNewRegister();
-        
+            
         postNewRegister(newRegister);
-        
+            
         cleanInputs();
             
+    }
+
+    function checkInputValues(): boolean{
+        let isAllCorrect = false;
+        if(name && age && maritalStatus && cpf && city && regionState){
+            if(
+                name != ''
+                && age != 0
+                && maritalStatus != ''
+                && cpf != ''
+                && city != ''
+                && regionState != ''
+            ){
+                isAllCorrect = true;
+            }
+        }
+
+        return isAllCorrect;
     }
 
     function createNewRegister(){

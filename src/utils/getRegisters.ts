@@ -1,5 +1,5 @@
 
-import { firestore, ref} from './firebase';
+import { firestore } from './firebase';
 
 export interface IRegisters{
   Name: string;
@@ -11,8 +11,7 @@ export interface IRegisters{
   ID: string;
 }
 
-
-let currentIndex = 0;
+const ref = firestore.collection("tabela");
 
   //Armazenando TODOS os dados em um estado "registers"
   export function getRegisters(){
