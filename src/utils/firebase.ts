@@ -17,4 +17,6 @@ if(!firebase.apps.length){
 
 const firestore = firebase.firestore();
 
-export { firestore };
+const ref = firestore.collection("tabela");
+
+export { firestore, ref };

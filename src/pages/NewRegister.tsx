@@ -1,10 +1,11 @@
 import { Fragment, useState } from "react";
 import styled from "styled-components";
 import Button from '../components/Button';
-import { IRegisters } from './index';
+import { IRegisters } from '../types/IRegister';
 import { v4 as uuidv4} from 'uuid';
 import { firestore } from "../utils/firebase";
-import { callbackify } from "util";
+import { postNewRegister } from "../utils/postRegister";
+
 
 
 export default function (){
@@ -18,17 +19,12 @@ export default function (){
 
     const ref = firestore.collection("tabela");
 
-    function postNewRegister(){
+    function sendPost(){
         const newRegister = createNewRegister();
-        if(newRegister && newRegister != undefined){
-          ref
-            .doc(newRegister.ID)
-            .set(newRegister)
-            .catch(err => {
-                console.log(err)
-            });
-            cleanInputs();
-        }
+        
+        postNewRegister(newRegister);
+        
+        cleanInputs();
             
     }
 
@@ -167,7 +163,7 @@ export default function (){
                                     bgHover: 'green',
                                     borderHover: '1px solid green'
                                 }}
-                                onClick={postNewRegister}
+                                onClick={sendPost}
                                 name="Cadastrar"
                             />
                         </div>

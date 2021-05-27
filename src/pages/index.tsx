@@ -1,18 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { getRegisters, visibleRegisters } from '../utils/getRegisters';
 
-import { firestore } from '../utils/firebase';
 import Button from '../components/Button';
-
-export interface IRegisters{
-  Name: string;
-  Age: Number;
-  MaritalStatus: string;
-  CPF: string;
-  City: string;
-  State: string;
-  ID: string;
-}
+import { IRegisters } from '../types/IRegister';
 
 const InitialRegisters: IRegisters[] = [
   {
@@ -26,48 +17,25 @@ const InitialRegisters: IRegisters[] = [
   }
 ];
 
+
 export default function Home() {
-  const [registers, setRegisters] = useState<IRegisters[]>(InitialRegisters);
-  const [visibleRegistersList, setVisibleRegistersList] = useState<IRegisters[]>(InitialRegisters);
-  const [loading, setLoading] = useState(false);
+  const [showRegisters, setShowRegisters] = useState<IRegisters[]>(InitialRegisters);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const ref = firestore.collection("tabela");
+  const {registers} = getRegisters();
 
-  function makeAVisibleList(){
-    //Criando lista temporária com uma fração do estado
-    //"registers"
-    let tempVisibleList = createNewVisibleRegistersList();
-
-    //Adicionando o conteúdo da lista a um novo estado.
-    setVisibleRegistersList(tempVisibleList);
-  }
-
-  //Retornando um um trecho do estado "registers"
-  function createNewVisibleRegistersList(){
-    //Atualizando informações do estado
-    getRegisters();
-    // Criando lista clone temporária
-    let tempVisibleList = registers;
-    //Retornando uma fração dessa lista
-    return tempVisibleList.slice(currentIndex, currentIndex+6);
-  }
-
-  //Armazenando TODOS os dados em um estado "registers"
-  function getRegisters(){
-    //Forçando renderização
+  async function changeRegisters(){
     setLoading(true);
-    // guardando dados do firestore em lista temporária 
-    ref.onSnapshot((querySnapshot) => {
-      const tempList = [];
-      querySnapshot.forEach((doc) => {
-        tempList.push(doc.data());
-      });
-      //Setando estado registers com lista temporária
-      setRegisters(tempList);
-      //Forçando renderização
+
+    const {registers} = visibleRegisters(currentIndex);
+
+    await setShowRegisters(registers);
+
+    setTimeout(() => {
       setLoading(false);
-    });
+    }, 500)
+
   }
 
   function previousPage(){
@@ -77,7 +45,7 @@ export default function Home() {
     }else{
       setCurrentIndex(previous);
     }
-    makeAVisibleList();
+    changeRegisters()
   }
 
   function nextPage(){
@@ -88,12 +56,13 @@ export default function Home() {
     }else{
       setCurrentIndex(next);
     }
-    makeAVisibleList();
+    
+    changeRegisters();
   }
 
 
   useEffect(() => {
-    makeAVisibleList();
+    changeRegisters();
   }, []);
 
   if(loading){
@@ -120,7 +89,7 @@ export default function Home() {
             </thead>
             <tbody>
             {
-              visibleRegistersList.map(register => {
+              showRegisters.slice(currentIndex, currentIndex+6).map(register => {
                 return(
                   <tr key={register.ID}>
                     <td className="name">{register.Name}</td>
@@ -137,7 +106,7 @@ export default function Home() {
             </tbody>
             <tfoot>
               <tr>
-                <td>Mostrando {currentIndex} até {currentIndex + 6} de {registers.length} resultados</td>
+                <td>Mostrando {currentIndex} até {currentIndex + 6} de {showRegisters.length} resultados</td>
                 <td></td>
                 <td></td>
                 <td></td>
