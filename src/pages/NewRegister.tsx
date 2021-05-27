@@ -5,11 +5,12 @@ import { IRegisters } from '../types/IRegister';
 import { v4 as uuidv4} from 'uuid';
 import { firestore } from "../utils/firebase";
 import { postNewRegister } from "../utils/postRegister";
+import { Alert } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
 export default function (){
-    // const [newRegister, setNewRegister] = useState<IRegisters>();
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
     const [maritalStatus, setMaritalStatus] = useState('Solteiro(a)');
@@ -17,13 +18,17 @@ export default function (){
     const [city, setCity] = useState('');
     const [regionState, setRegionState] = useState('AC');
 
+    const [showDangerAlert, setShowDangerAlert] = useState(false);
+
     const ref = firestore.collection("tabela");
 
     function sendPost(){
         let checkInputs = checkInputValues();
 
         if(!checkInputs){
-            return alert('Pegou?');
+            setShowDangerAlert(true);
+
+            return; 
         }
         const newRegister = createNewRegister();
             
@@ -75,19 +80,58 @@ export default function (){
         setRegionState('AC');
     }
 
+    const DangerAlertContent: React.FC = () => {
+        let numberOfErrors = 0;
+        (!name || name == '') && numberOfErrors++;
+        (!age || age == 0) && numberOfErrors++;
+        (!cpf || cpf == '') && numberOfErrors++;
+        (!city || city == '') && numberOfErrors++;
+
+        return (
+            <>    
+                <h6>Existe(m) {numberOfErrors} erro(s) ao adicionar uma nova pessoa.</h6>
+                <ul>
+    
+                    {(!name || name == '') && <li>O campo Nome é obrigatório</li>}
+                    {(!age || age == 0) && <li>O campo Idade é obrigatório</li>}
+                    {(!cpf || cpf == '') && <li>O campo CPF é obrigatório</li>}
+                    {(!city || city == '') && <li>O campo Cidade é obrigatório</li>}
+                    
+                </ul>
+            </>
+        );
+    }
+
+
     return (
         <Fragment>
             <div className="Titulo">
                 <h1>Novo Cadastro</h1>
             </div>
             <Container>
+                {
+                showDangerAlert
+                && <Alert 
+                    className="alert" 
+                    variant="danger"
+                   >
+                    <div>
+                        <button 
+                            type="button" 
+                            className="btn-close" 
+                            aria-label="Close alert"
+                            onClick={() => setShowDangerAlert(false)}
+                        ></button>
+                    </div>
+                        <DangerAlertContent/>
+                    </Alert>
+                }
                 <div className="registerContainer">
 
                     <div className="registerSubtitle">
                         <h3>Informações pessoais</h3>
                         <p>Adicione aqui as informações da nova pesoa.</p>
                     </div>
-
                     <div className="registerForms">
 
                         <div className="form formName">
@@ -206,6 +250,18 @@ const Container = styled.section`
     justify-content: center;
     align-items: center;
 
+    .alert{
+        position: absolute;
+        float: left;
+        top: 3.5rem;
+        right: .75rem;
+
+        div{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+    }
 
     .registerContainer{
         display: flex;

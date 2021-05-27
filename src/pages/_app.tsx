@@ -16,6 +16,8 @@ const GlobalStyle = createGlobalStyle`
   body{
     margin: 0;
     padding: 0;
+    font-size: 15px;
+    font-family: cursive;
   }
   
 
@@ -55,6 +57,7 @@ const GlobalStyle = createGlobalStyle`
 
   .Titulo{
     border: 1px solid #E8E8E8;
+    padding: 1.5rem;
     h1{
       font-size: 2rem;
       margin-left: 15rem;
