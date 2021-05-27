@@ -19,6 +19,7 @@ export default function (){
     const [regionState, setRegionState] = useState('AC');
 
     const [showDangerAlert, setShowDangerAlert] = useState(false);
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
     const ref = firestore.collection("tabela");
 
@@ -111,20 +112,32 @@ export default function (){
             <Container>
                 {
                 showDangerAlert
-                && <Alert 
-                    className="alert" 
+                && <Alert
+                    className="alert dangerAlert"
                     variant="danger"
                    >
-                    <div>
+                        <DangerAlertContent/>
                         <button 
                             type="button" 
                             className="btn-close" 
                             aria-label="Close alert"
                             onClick={() => setShowDangerAlert(false)}
                         ></button>
-                    </div>
-                        <DangerAlertContent/>
                     </Alert>
+                }
+                {
+                    showSuccessAlert
+                    && <Alert className="alert successAlert" variant="success">
+                            Cadastro realizado com sucesso!
+                            <div>
+                                <button 
+                                    type="button" 
+                                    className="btn-close" 
+                                    aria-label="Close alert"
+                                    onClick={() => setShowSuccessAlert(false)}
+                                ></button>
+                            </div>
+                        </Alert>
                 }
                 <div className="registerContainer">
 
@@ -230,7 +243,7 @@ export default function (){
                                     bgHover: 'green',
                                     borderHover: '1px solid green'
                                 }}
-                                onClick={sendPost}
+                                onClick={() => setShowSuccessAlert(true)}
                                 name="Cadastrar"
                             />
                         </div>
@@ -261,6 +274,13 @@ const Container = styled.section`
             flex-direction: row;
             justify-content: flex-end;
         }
+    }
+
+    .successAlert{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 40%;
     }
 
     .registerContainer{
