@@ -3,10 +3,10 @@ import styled from "styled-components";
 import Button from '../components/Button';
 import { IRegisters } from '../types/IRegister';
 import { v4 as uuidv4} from 'uuid';
-import { firestore } from "../utils/firebase";
 import { postNewRegister } from "../utils/postRegister";
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MaskedInput from 'react-text-mask';
 
 
 
@@ -80,6 +80,23 @@ export default function (){
         setCity('');
         setRegionState('AC');
     }
+
+    const cpfNumberMask = [
+            /[1-9]/,
+            /\d/,
+            /\d/,
+            ".",
+            /\d/,
+            /\d/,
+            /\d/,
+            ".",
+            /\d/,
+            /\d/,
+            /\d/,
+            "-",
+            /\d/,
+            /\d/
+    ];
 
     const DangerAlertContent: React.FC = () => {
         let numberOfErrors = 0;
@@ -198,12 +215,13 @@ export default function (){
                         </div>
                         <div className="form formCPF">
                             <label>CPF</label>
-                            <input
+                            <MaskedInput
+                                name="CPF" 
+                                type="tel" 
+                                placeholder="000.000.000-00"
+                                mask={cpfNumberMask}
                                 value={cpf}
                                 onChange={event => setCpf(event.target.value)}
-                                name="CPF" 
-                                type="text" 
-                                placeholder="000.000.000-00"
                             />
                         </div>
                         <div className="form formCity">

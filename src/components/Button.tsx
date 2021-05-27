@@ -45,7 +45,7 @@ export default function Button({name, onClick, color=ButtonColor}: ButtonProps){
 
     return (
         <div>
-            <StyledButton onClick={onClick}>
+            <StyledButton color="black" onClick={onClick}>
                 {name}
             </StyledButton>
         </div>
