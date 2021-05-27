@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getRegisters, visibleRegisters } from '../utils/getRegisters';
+import { getRegisters } from '../utils/getRegisters';
+import Loader from "react-loader-spinner";
 
 import Button from '../components/Button';
 import { IRegisters } from '../types/IRegister';
@@ -87,15 +88,73 @@ export default function Home() {
             <tbody>
             {
               loading
-              ? (<tr>
-                    <td className="name"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><a href="#">Loading</a></td>
-                  </tr>)
+              ? (                    
+                  <tr>
+                      <td>
+                        <Loader
+                          type="TailSpin"
+                          color="#00BFFF"
+                          height={20}
+                          width={60}
+                          timeout={3000}
+                        />
+                      </td>
+                      <td>
+                        <Loader
+                          type="TailSpin"
+                          color="#00BFFF"
+                          height={20}
+                          width={20}
+                          timeout={3000}
+                        />
+                      </td>
+                      <td>
+                        <Loader
+                          type="TailSpin"
+                          color="#00BFFF"
+                          height={20}
+                          width={20}
+                          timeout={3000}
+                        />
+                      </td>
+                      <td>
+                        <Loader
+                          type="TailSpin"
+                          color="#00BFFF"
+                          height={20}
+                          width={20}
+                          timeout={3000}
+                        />
+                      </td>
+                      <td>
+                        <Loader
+                          type="TailSpin"
+                          color="#00BFFF"
+                          height={20}
+                          width={20}
+                          timeout={3000}
+                        />
+                      </td>
+                      <td>
+                        <Loader
+                          type="TailSpin"
+                          color="#00BFFF"
+                          height={20}
+                          width={20}
+                          timeout={3000}
+                        />
+                      </td>
+                      <td>
+                        <Loader
+                          type="TailSpin"
+                          color="#00BFFF"
+                          height={20}
+                          width={20}
+                          timeout={3000}
+                        />
+                      </td>
+                  </tr>
+                  )
               : showRegisters.slice(currentIndex, currentIndex+6).map(register => {
                 return(
                   <tr key={register.ID}>

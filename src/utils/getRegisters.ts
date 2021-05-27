@@ -28,8 +28,3 @@ let currentIndex = 0;
     return {registers};
       
   }
-
-  export const visibleRegisters = (n) => {
-    const {registers} = getRegisters();
-    return {registers};
-  }
