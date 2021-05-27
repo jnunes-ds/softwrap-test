@@ -25,27 +25,22 @@ export default function Home() {
 
   const {registers} = getRegisters();
 
-  async function changeRegisters(){
-    setLoading(true);
-
-    const {registers} = visibleRegisters(currentIndex);
-
-    await setShowRegisters(registers);
-
-    setTimeout(() => {
-      setLoading(false);
-    }, 500)
-
+  function changeRegisters(){
+    setShowRegisters(registers);
   }
 
   function previousPage(){
     let previous = currentIndex - 6;
     if((currentIndex - 6) <= 0){
-      setCurrentIndex(0);
+      if(currentIndex === 0){
+        return;
+      }else{
+        setCurrentIndex(0);
+      }
     }else{
       setCurrentIndex(previous);
     }
-    changeRegisters()
+    changeRegisters();
   }
 
   function nextPage(){
@@ -62,12 +57,14 @@ export default function Home() {
 
 
   useEffect(() => {
-    changeRegisters();
+    setLoading(true);
+    setTimeout(() => {
+      changeRegisters();
+      setLoading(false);
+    }, 1000)
   }, []);
 
-  if(loading){
-    return <h1>Loading...</h1>
-  }
+
 
   return (
     <Container>
@@ -89,7 +86,17 @@ export default function Home() {
             </thead>
             <tbody>
             {
-              showRegisters.slice(currentIndex, currentIndex+6).map(register => {
+              loading
+              ? (<tr>
+                    <td className="name"></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><a href="#">Loading</a></td>
+                  </tr>)
+              : showRegisters.slice(currentIndex, currentIndex+6).map(register => {
                 return(
                   <tr key={register.ID}>
                     <td className="name">{register.Name}</td>
