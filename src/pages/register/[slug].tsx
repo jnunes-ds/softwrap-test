@@ -2,7 +2,6 @@ import { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from '../../components/Button';
 import { IRegisters } from '../../types/IRegister';
-import { v4 as uuidv4} from 'uuid';
 import { postNewRegister } from "../../utils/postRegister";
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -96,7 +95,6 @@ export default function (){
     }
 
     function createNewRegister(){
-        let newId = uuidv4();
         let aNewRegister: IRegisters = {
             Name: name,
             Age: age,
