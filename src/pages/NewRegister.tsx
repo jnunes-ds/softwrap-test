@@ -406,4 +406,30 @@ const Container = styled.section`
             }
         }
     }
+
+    @media screen and (max-width: 770px){
+        
+        
+            .alert{
+                position: fixed;
+                float: right;
+                top: 50%;
+
+            }
+
+            .successAlert{
+                width: 90%;
+            }
+        
+        .registerContainer{
+            flex-direction: column;
+
+            .registerForms{
+                display: flex;
+                flex-direction: column;
+                width: 90vw;
+            }
+
+        }
+    }
 `;
