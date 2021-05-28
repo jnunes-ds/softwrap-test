@@ -81,12 +81,12 @@ export default function Home() {
           <table>
             <thead>
               <tr>
-                <td>NOME</td>
-                <td>IDADE</td>
-                <td>ESTADO CIVIL</td>
-                <td>CPF</td>
-                <td>CIDADE</td>
-                <td>ESTADO</td>
+                <td className="name">NOME</td>
+                <td className="age">IDADE</td>
+                <td className="maritalStatus">ESTADO CIVIL</td>
+                <td className="cpf">CPF</td>
+                <td className="city">CIDADE</td>
+                <td className="regionState">ESTADO</td>
               </tr>
             </thead>
             <tbody>
@@ -163,12 +163,12 @@ export default function Home() {
                 return(
                   <tr key={register.ID}>
                     <td className="name">{register.Name}</td>
-                    <td>{register.Age}</td>
-                    <td>{register.MaritalStatus}</td>
-                    <td>{register.CPF}</td>
-                    <td>{register.City}</td>
-                    <td>{register.State}</td>
-                    <td>
+                    <td className="age">{register.Age}</td>
+                    <td className="maritalStatus">{register.MaritalStatus}</td>
+                    <td className="cpf">{register.CPF}</td>
+                    <td className="city">{register.City}</td>
+                    <td className="regionState">{register.State}</td>
+                    <td className="edit">
                       <Link href={`/register/${register.ID}`}>
                         <a href="#">Editar</a>
                       </Link>

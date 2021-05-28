@@ -63,6 +63,18 @@ const GlobalStyle = createGlobalStyle`
       margin-left: 15rem;
     }
   }
+
+  @media screen and (max-width: 770px){
+    body{
+    }
+
+    .maritalStatus,
+    .cpf,
+    .city,
+    .regionState{
+      display: none;
+    }
+  }
 `;
 
 export default MyApp
