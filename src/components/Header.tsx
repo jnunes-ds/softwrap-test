@@ -1,7 +1,8 @@
-import styled from "styled-components"
 import Link from 'next/link';
+import { useState } from 'react';
 
 export function Header(){
+    const [showMenu, setShowMenu] = useState(true);
     return (
         <div className="buttonsContainer">
             <div className="buttons">

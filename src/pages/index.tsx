@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getRegisters } from '../utils/getRegisters';
+import { getRegisters } from '../utils/firebase';
 import Loader from "react-loader-spinner";
 
 import Button from '../components/Button';
-import { IRegisters } from '../types/IRegister';
+// import IRegisters from '../types/IRegister';
 import Link from 'next/link';
+import { IRegisters } from '../types/IRegisters';
+
 
 const InitialRegisters: IRegisters[] = [
   {
@@ -70,6 +72,7 @@ export default function Home() {
 
 
 
+
   return (
     <Container>
       <div className="App">
@@ -94,7 +97,7 @@ export default function Home() {
               loading
               ? (                    
                   <tr>
-                      <td>
+                      <td className="name">
                         <Loader
                           type="TailSpin"
                           color="#00BFFF"
@@ -103,7 +106,7 @@ export default function Home() {
                           timeout={3000}
                         />
                       </td>
-                      <td>
+                      <td className="age">
                         <Loader
                           type="TailSpin"
                           color="#00BFFF"
@@ -112,7 +115,7 @@ export default function Home() {
                           timeout={3000}
                         />
                       </td>
-                      <td>
+                      <td className="maritalStatus">
                         <Loader
                           type="TailSpin"
                           color="#00BFFF"
@@ -121,7 +124,7 @@ export default function Home() {
                           timeout={3000}
                         />
                       </td>
-                      <td>
+                      <td className="cpf">
                         <Loader
                           type="TailSpin"
                           color="#00BFFF"
@@ -130,7 +133,7 @@ export default function Home() {
                           timeout={3000}
                         />
                       </td>
-                      <td>
+                      <td className="city">
                         <Loader
                           type="TailSpin"
                           color="#00BFFF"
@@ -139,7 +142,7 @@ export default function Home() {
                           timeout={3000}
                         />
                       </td>
-                      <td>
+                      <td className="regionState">
                         <Loader
                           type="TailSpin"
                           color="#00BFFF"
@@ -148,7 +151,7 @@ export default function Home() {
                           timeout={3000}
                         />
                       </td>
-                      <td>
+                      <td className="tableButtons">
                         <Loader
                           type="TailSpin"
                           color="#00BFFF"
@@ -181,11 +184,11 @@ export default function Home() {
             <tfoot>
               <tr>
                 <td>Mostrando {currentIndex} até {currentIndex + maxItems} de {showRegisters.length} resultados</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
+                <td className="nulltd"></td>
+                <td className="nulltd"></td>
+                <td className="nulltd"></td>
+                <td className="nulltd"></td>
+                <td className="tableButtons">
                   <Button 
                     onClick={previousPage}
                     name="Anterior" 
@@ -257,6 +260,38 @@ const Container = styled.section`
             }
           }
         }
+      }
+    }
+  }
+
+  @media screen and (max-width: 770px){
+    
+    .container{
+      display: flex;
+      flex-direction: row;
+      width: 100vw;
+      height: 80vh;
+      justify-content: center;
+
+      table{
+        padding: 0;
+        tbody{
+          width: 100%;
+          height: 100%;
+
+          td{
+            width: 100%;
+            font-size: 25px;
+          }
+        }
+      }
+
+      .maritalStatus,
+      .cpf,
+      .city,
+      .regionState,
+      .nulltd{
+        display: none;
       }
     }
   }

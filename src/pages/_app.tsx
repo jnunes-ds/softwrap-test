@@ -1,12 +1,31 @@
 import { Header } from "../components/Header";
 import { createGlobalStyle } from 'styled-components';
+import Dropdown from 'react-bootstrap/Dropdown';
+import { useState } from 'react';
 
 
 function MyApp({ Component, pageProps }) {
+  const [showMenu, setShowMenu] = useState(false);
   return (
     <div>
       <GlobalStyle/>
-      <Header/>
+      <div className="allMenus">
+        <div className="burgerButtons">
+          <div className={showMenu && 'hide'}>
+            <button
+              onClick={() => setShowMenu(true)}
+            >Mostrar</button>
+          </div>
+          <div className={!showMenu && 'hide'}>
+            <button
+              onClick={() => setShowMenu(false)}
+            >Esconder</button>
+          </div>
+        </div>
+        <div className={!showMenu && 'hide'}>
+          <Header/>
+        </div>
+      </div>
       <Component {...pageProps} />
     </div>
   );
@@ -17,8 +36,20 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     font-size: 15px;
-    font-family: cursive;
+    font-family: Georgia, 'Times New Roman', Times, serif;
   }
+    .burgerButtons{
+      display: flexbox;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #282a35;
+      color: white;
+      width: 100vw;
+      height: 3rem;
+      display: none;
+
+    }
   
 
   .buttonsContainer{
@@ -29,6 +60,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: #282a35;
     width: 100vw;
     height: 3rem;
+
 
 
     .buttons{
@@ -65,15 +97,37 @@ const GlobalStyle = createGlobalStyle`
   }
 
   @media screen and (max-width: 770px){
-    body{
+    .allMenus{
+      position: sticky;
+      top: 0;
     }
 
-    .maritalStatus,
-    .cpf,
-    .city,
-    .regionState{
+    .buttonsContainer{
+      justify-content: space-around;
+      align-items:flex-start;
+      background-color: #282a35;
+      min-width: 100vw;
+      height: 7rem;
+      margin: 0;
+
+      .buttons{
+        display: flex;
+        flex-direction: column;
+        margin-left: 0;
+      } 
+    }
+    
+
+    .burgerButtons{
+      display: flex;
+      justify-content: flex-end;
+
+    }
+
+    .hide{
       display: none;
     }
+      
   }
 `;
 
