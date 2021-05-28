@@ -1,6 +1,5 @@
 import { Header } from "../components/Header";
 import { createGlobalStyle } from 'styled-components';
-import Dropdown from 'react-bootstrap/Dropdown';
 import { useState } from 'react';
 import { BsJustify, BsX } from "react-icons/bs";
 
@@ -10,7 +9,13 @@ function MyApp({ Component, pageProps }) {
   return (
     <div>
       <GlobalStyle/>
+      {/* Menu e o burgerButton que o esconde (quando mobile) */}
       <div className="allMenus">
+
+        {
+        /**Menu superior com burgerButton exibido 
+         * apenas em dispositivos mobile */
+        }
         <div className="burgerButtons">
           <div className={showMenu && 'hide'}>
             <button
@@ -23,10 +28,14 @@ function MyApp({ Component, pageProps }) {
             ><BsX /></button>
           </div>
         </div>
+
+        {/**Menu principal, aparece durante toda a aplicação */}
         <div className={!showMenu && 'hide'}>
           <Header/>
         </div>
       </div>
+      
+      {/**Outras páginas/componentes da aplicação */}
       <Component {...pageProps} />
     </div>
   );

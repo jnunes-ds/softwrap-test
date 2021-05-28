@@ -4,7 +4,6 @@ import { getRegisters } from '../utils/firebase';
 import Loader from "react-loader-spinner";
 
 import Button from '../components/Button';
-// import IRegisters from '../types/IRegister';
 import Link from 'next/link';
 import { IRegisters } from '../types/IRegisters';
 
@@ -23,18 +22,23 @@ const InitialRegisters: IRegisters[] = [
 
 
 export default function Home() {
+  //Estado que armazena arrei de cadastros do firestore
   const [showRegisters, setShowRegisters] = useState<IRegisters[]>(InitialRegisters);
+  //Índice do cadastro atual (primieio), ex: se estiver mostrando de 0 a 6 o Índice é 0
   const [currentIndex, setCurrentIndex] = useState(0);
+  //Estado que determina se a tabela deverá mostrar que está em loading
   const [loading, setLoading] = useState(false);
-  
+  //Máximo de itens cadastros que podem ser mostrados por vez na tela
   const maxItems = 6;
-
+  //Array de registros puxados do firestore
   const {registers} = getRegisters();
 
+  //Armazena os registros puxados no estado
   function changeRegisters(){
     setShowRegisters(registers);
   }
 
+  //Simula a volta de uma página diminuindo o valor do índice
   function previousPage(){
     let previous = currentIndex - maxItems;
     if((currentIndex - maxItems) <= 0){
@@ -49,6 +53,7 @@ export default function Home() {
     changeRegisters();
   }
 
+  //Simula o avanço de uma página aumentando o valor do índice
   function nextPage(){
     let max = registers.length - maxItems;
     let next = currentIndex + maxItems;
@@ -62,6 +67,7 @@ export default function Home() {
   }
 
 
+  //Chama a função para puxar os cadastros do firebase
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
