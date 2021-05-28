@@ -1,29 +1,21 @@
 import { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from '../../components/Button';
-import { IRegisters } from '../../types/IRegisters';
+import { IRegisters } from '../../types';
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MaskedInput from 'react-text-mask';
 import { useRouter } from 'next/router';
-import { getRegisterById } from '../../utils/firebase';
-import { updateRegister } from '../../utils/firebase';
-import { deleteRegister } from '../../utils/firebase';
+import { 
+    getRegisterById, 
+    updateRegister,
+    deleteRegister 
+} from '../../utils/firebase';
 
-const InitialRegisters: IRegisters[] = [
-  {
-    Name: '',
-    Age: 0,
-    MaritalStatus: '',
-    CPF: '',
-    City: '',
-    State: '',
-    ID: ''
-  }
-];
+
 
 export default function (){
-    
+    //Estados referentes a informações de cadastro do usuário
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
     const [maritalStatus, setMaritalStatus] = useState('');
@@ -32,18 +24,27 @@ export default function (){
     const [regionState, setRegionState] = useState('');
     const [registerId, setRegisterId] = useState('');
     
+    //Estadpos referentes a visibilidade dos alertas de erro, sucesso
+    //e confirmação de deleção
     const [showDangerAlert, setShowDangerAlert] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [showDeleteAlert, setShowDeleteAlert] = useState(false);
     
+    //Constantes que armazenam o valor do id presente no slug
     const router = useRouter();
-    
     const slug = String(router.query.slug);
     
+    //registro do cadastro puxado do firestore a partir do id
     const {register} = getRegisterById(slug);
     
+    //Armazena os dados coletados do cadastro nos estados anteriormente criados
     function getRegister(){
         
+        /**
+         * Aguardar um segundo para setar esses dados foi a forma que encontrei
+         * de evitar o erro onde os dados aparecem vazios na tela.
+         * Não consegui transformar getRegistersById numa função async await
+         */
         setTimeout(() => {
             setName(register.Name);
             setAge(register.Age);
@@ -55,29 +56,42 @@ export default function (){
         }, 1000)
     }
 
+    //Função chamada diretamente pelo usuário no click do botão
     function sendUpdate(){
+        /*Checa se há algum dado sem preenchimento e retorna um booleano
+         *O valor deve ser positivo para que a postagem aconteça.
+         */
         let checkInputs = checkInputValues();
 
+        /**Caso a função anterior retorne false aparecerá um alerta informando que
+         *há dados sem preencher
+         */
         if(!checkInputs){
             setShowDangerAlert(true);
 
             return; 
         }
+        //Caso retorne true é criado um novo registro com todos os dados de cada input
         const newRegister = createNewRegister();
-            
+         
+        //Esses registros são setados para o firestore
         updateRegister(newRegister);
 
+        // É alterado o estado responsável por tornar visível o alert de sucesso
         setShowSuccessAlert(true);
             
     }
 
+    /**Função chamada pelo usuário ao confirmar explusão, ela pega o id do usuário
+     * e o envia como arguento para uma função que solicitará a deleção ao firestore 
+     */ 
     function onDelete(){
         deleteRegister(registerId);
-        console.log(registerId);
         router.push('/');
         
     }
 
+    //Checa se todos os valores estão corretos e retorna um boolean.
     function checkInputValues(): boolean{
         let isAllCorrect = false;
         if(name && age && maritalStatus && cpf && city && regionState){
@@ -96,6 +110,7 @@ export default function (){
         return isAllCorrect;
     }
 
+    //Cria um novo registro a partir dos estados de cada informação e retorna esse registro
     function createNewRegister(){
         let aNewRegister: IRegisters = {
             Name: name,
@@ -109,24 +124,13 @@ export default function (){
 
         return aNewRegister;
     }
-
+    
+    //Máscara para input CPF. 
     const cpfNumberMask = [
-            /[0-9]/,
-            /\d/,
-            /\d/,
-            ".",
-            /\d/,
-            /\d/,
-            /\d/,
-            ".",
-            /\d/,
-            /\d/,
-            /\d/,
-            "-",
-            /\d/,
-            /\d/
+            /[0-9]/,/\d/,/\d/,".",/\d/,/\d/,/\d/,".",/\d/,/\d/,/\d/,"-",/\d/,/\d/
     ];
 
+    //Verifica quais itens estão em branco e, a partir deles retorna um alert personalizado.
     const DangerAlertContent: React.FC = () => {
         let numberOfErrors = 0;
         (!name || name == '') && numberOfErrors++;
@@ -151,6 +155,9 @@ export default function (){
         );
     }
 
+    /**Verifica se há algum alert sendo exibido (Salvo a pergunta sobre deletar usuário) 
+     * e torna ele novamente invisível em 5s.
+     */  
     useEffect(() => {
         if(showDangerAlert){
             setTimeout(() => {
@@ -164,6 +171,9 @@ export default function (){
         }
     }, [showDangerAlert, showSuccessAlert]);
 
+    /**verifica se houve alguma mudança na variável register, que é puxada do firestore,
+     * e a partir disso chama a função getRegister.
+     */ 
     useEffect(() => {
         getRegister();
     }, [register])
@@ -177,6 +187,9 @@ export default function (){
             </div>
             <Container>
                 {
+                    /**Alerta exibido para informar que existem campos obrigatórios do cadastro
+                     * que não foram preenchidos
+                     */ 
                 showDangerAlert
                 && <Alert
                     className="alert dangerAlert"
@@ -194,6 +207,7 @@ export default function (){
                     </Alert>
                 }
                 {
+                    //Alerta de sucesso exibido quando a modificação do usuário ocorre corretamente
                     showSuccessAlert
                     && <Alert className="alert successAlert" variant="success">
                             ✅ Cadastro Modificado com sucesso!
@@ -208,6 +222,7 @@ export default function (){
                         </Alert>
                 }
                 {
+                    // Alerta para confirmar se usuário deve ser excluído 
                     showDeleteAlert
                     && <Alert
                             className="deleteAlert"
