@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import MaskedInput from 'react-text-mask';
 import { useRouter } from 'next/router';
 import { getRegisterById } from '../../utils/getRegiterById';
+import { updateRegister } from '../../utils/updateRegister';
 
 const InitialRegisters: IRegisters[] = [
   {
@@ -22,8 +23,7 @@ const InitialRegisters: IRegisters[] = [
 ];
 
 export default function (){
-    const [loading, setLoading] = useState(false);
-     
+    
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
     const [maritalStatus, setMaritalStatus] = useState('');
@@ -34,15 +34,15 @@ export default function (){
     
     const [showDangerAlert, setShowDangerAlert] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+    const [showDeleteAlert, setShowDeleteAlert] = useState(false);
     
     const router = useRouter();
     
-    function getRegister(){
-        setLoading(true)
+    const slug = String(router.query.slug);
     
-        const slug = String(router.query.slug);
-        
-        const {register} = getRegisterById(slug);
+    const {register} = getRegisterById(slug);
+    
+    function getRegister(){
         
         setTimeout(() => {
             setName(register.Name);
@@ -52,12 +52,10 @@ export default function (){
             setCity(register.City);
             setRegionState(register.State);
             setUserId(register.ID);
-
-            setLoading(false);
         }, 1000)
     }
 
-    function sendPost(){
+    function sendUpdate(){
         let checkInputs = checkInputValues();
 
         if(!checkInputs){
@@ -67,11 +65,9 @@ export default function (){
         }
         const newRegister = createNewRegister();
             
-        postNewRegister(newRegister);
+        updateRegister(newRegister);
 
         setShowSuccessAlert(true);
-            
-        cleanInputs();
             
     }
 
@@ -107,15 +103,6 @@ export default function (){
         return aNewRegister;
     }
 
-    function cleanInputs(){
-        setName('');
-        setAge(0);
-        setMaritalStatus('Solteio(a)');
-        setCpf('');
-        setCity('');
-        setRegionState('AC');
-    }
-
     const cpfNumberMask = [
             /[1-9]/,
             /\d/,
@@ -144,7 +131,7 @@ export default function (){
 
         return (
             <>    
-                <h6> ❌ Existe(m) {numberOfErrors} erro(s) ao adicionar uma nova pessoa.</h6>
+                <h6> ❌ Existe(m) {numberOfErrors} erro(s) ao modificar o cadastro dessa pessoa.</h6>
                 <ul>
     
                     {(!name || name == '') && <li>O campo Nome é obrigatório</li>}
@@ -172,17 +159,14 @@ export default function (){
 
     useEffect(() => {
         getRegister();
-    }, [])
+    }, [register])
     
 
-    if(loading){
-        return <h1>Loading...</h1>
-    }
 
     return (
         <Fragment>
             <div className="Titulo">
-                <h1>Novo Cadastro</h1>
+                <h1>Alterar Cadastro</h1>
             </div>
             <Container>
                 {
@@ -205,7 +189,7 @@ export default function (){
                 {
                     showSuccessAlert
                     && <Alert className="alert successAlert" variant="success">
-                            ✅ Cadastro realizado com sucesso!
+                            ✅ Cadastro Modificado com sucesso!
                             <div>
                                 <button 
                                     type="button" 
@@ -216,11 +200,44 @@ export default function (){
                             </div>
                         </Alert>
                 }
+                {
+                    showDeleteAlert
+                    && <Alert
+                            className="deleteAlert"
+                            variant="danger"
+                       >
+                           <h4>Excluir</h4>
+                           <p>Tem certeza que deseja excluir esse cadastro?</p>
+                           <div className="deleteButtons">
+                               <Button 
+                                    name="cancelar"
+                                    color={{
+                                        bgNormal: 'white',
+                                        borderNormal: 'none',
+                                        textColorNormal: '#ff0000',
+                                        bgHover: '#00ff00',
+                                        borderHover: 'none'
+                                    }}
+                                    onClick={() => setShowDeleteAlert(false)}
+                                />
+                                <Button 
+                                    name="Excluir"
+                                    color={{
+                                        bgNormal: '#ff0000',
+                                        borderNormal: 'none',
+                                        textColorNormal: 'white',
+                                        bgHover: '#ff00009f',
+                                        borderHover: 'none'
+                                    }}
+                                />
+                            </div>
+                       </Alert>
+                }
                 <div className="registerContainer">
 
                     <div className="registerSubtitle">
                         <h3>Informações pessoais</h3>
-                        <p>Adicione aqui as informações da nova pesoa.</p>
+                        <p>Modifique aqui as informações da pesoa em exibição.</p>
                     </div>
                     <div className="registerForms">
 
@@ -315,14 +332,25 @@ export default function (){
                         <div className="btn">
                             <Button 
                                 color={{
+                                    bgNormal: '#00ffffff',
+                                    borderNormal: '1px solid #00ffff',
+                                    textColorNormal: 'blue',
+                                    bgHover: 'red',
+                                    borderHover: '1px solid red'
+                                }}
+                                onClick={() => setShowDeleteAlert(true)}
+                                name="Excluir Cadastro"
+                            />
+                            <Button 
+                                color={{
                                     bgNormal: 'blue',
                                     borderNormal: '1px solid blue',
                                     textColorNormal: '#FFF',
                                     bgHover: 'green',
                                     borderHover: '1px solid green'
                                 }}
-                                onClick={sendPost   }
-                                name="Cadastrar"
+                                onClick={sendUpdate}
+                                name="Alterar"
                             />
                         </div>
 
@@ -360,6 +388,27 @@ const Container = styled.section`
         flex-direction: row;
         justify-content: space-between;
         width: 40%;
+    }
+
+    .deleteAlert{
+        position: absolute;
+        top: 40%;
+        right: 60%;
+        left: 40%;
+        bottom: 60%;
+        align-self: center;
+        float: none;
+        width: 35rem;
+        height: 15rem;
+
+        p{
+            margin-top: 2rem;
+            font-size: larger;
+        }
+
+        .deleteButtons{
+            width: 100%;
+        }
     }
 
     .registerContainer{
