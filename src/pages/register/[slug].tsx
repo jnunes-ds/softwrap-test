@@ -32,6 +32,7 @@ export default function (){
     const [cpf, setCpf] = useState('');
     const [city, setCity] = useState('');
     const [regionState, setRegionState] = useState('');
+    const [userId, setUserId] = useState('');
     
     const [showDangerAlert, setShowDangerAlert] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -58,6 +59,7 @@ export default function (){
             setCpf(register.CPF);
             setCity(register.City);
             setRegionState(register.State);
+            setUserId(register.ID);
 
             setLoading(false);
         }, 1000)
@@ -108,7 +110,7 @@ export default function (){
             CPF: cpf,
             City: city,
             State: regionState,
-            ID: newId
+            ID: userId
         };
 
         return aNewRegister;
