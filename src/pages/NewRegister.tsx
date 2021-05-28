@@ -11,6 +11,7 @@ import { IRegisters } from "../types/IRegisters";
 
 
 export default function (){
+    //Estados referentes a informações de cadastro do usuário
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
     const [maritalStatus, setMaritalStatus] = useState('Solteiro(a)');
@@ -18,27 +19,36 @@ export default function (){
     const [city, setCity] = useState('');
     const [regionState, setRegionState] = useState('AC');
 
+    //Estados referentes a visibilidade dos alertas de erro e sucesso.
     const [showDangerAlert, setShowDangerAlert] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
+    //Função chamada diretamente pelo usuário no click do botão
     function sendPost(){
+        //Checa se todos os dados foram preenchidos
         let checkInputs = checkInputValues();
 
+        //Caso não, exibe um aviso
         if(!checkInputs){
             setShowDangerAlert(true);
 
             return; 
         }
+        //Caso sim, cria um novo cadastro com os dados fornecidos 
         const newRegister = createNewRegister();
             
+        //Envia esse cadastro para o firebase
         postNewRegister(newRegister);
 
+        //Mostra mensagem de sucesso após envio
         setShowSuccessAlert(true);
             
+        // Limpa todos os inputs
         cleanInputs();
             
     }
 
+    //Checa se todos os inputs foram preenchidos e retorna um boolean
     function checkInputValues(): boolean{
         let isAllCorrect = false;
         if(name && age && maritalStatus && cpf && city && regionState){
@@ -57,6 +67,7 @@ export default function (){
         return isAllCorrect;
     }
 
+    //Cria novo cadastro a partir dos valores dos inputs
     function createNewRegister(){
         let newId = uuidv4();
         let aNewRegister: IRegisters = {
@@ -72,6 +83,7 @@ export default function (){
         return aNewRegister;
     }
 
+    //Limpa os inputs
     function cleanInputs(){
         setName('');
         setAge(0);
@@ -81,23 +93,12 @@ export default function (){
         setRegionState('AC');
     }
 
+    //Máscara para input CPF
     const cpfNumberMask = [
-            /[0-9]/,
-            /\d/,
-            /\d/,
-            ".",
-            /\d/,
-            /\d/,
-            /\d/,
-            ".",
-            /\d/,
-            /\d/,
-            /\d/,
-            "-",
-            /\d/,
-            /\d/
+            /[0-9]/,/\d/,/\d/,".",/\d/,/\d/,/\d/,".",/\d/,/\d/,/\d/,"-",/\d/,/\d/
     ];
 
+    //Verifica quais itens estão em branco e, apartir deles, retorna um alerta personalizado
     const DangerAlertContent: React.FC = () => {
         let numberOfErrors = 0;
         (!name || name == '') && numberOfErrors++;
@@ -122,6 +123,7 @@ export default function (){
         );
     }
 
+    //Verifica se há algum alerta sendo mostrado e o esconde novamente em 5s.
     useEffect(() => {
         if(showDangerAlert){
             setTimeout(() => {

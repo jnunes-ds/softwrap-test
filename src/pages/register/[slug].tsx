@@ -24,7 +24,7 @@ export default function (){
     const [regionState, setRegionState] = useState('');
     const [registerId, setRegisterId] = useState('');
     
-    //Estadpos referentes a visibilidade dos alertas de erro, sucesso
+    //Estados referentes a visibilidade dos alertas de erro, sucesso
     //e confirmação de deleção
     const [showDangerAlert, setShowDangerAlert] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
