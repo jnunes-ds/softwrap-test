@@ -9,6 +9,7 @@ import MaskedInput from 'react-text-mask';
 import { useRouter } from 'next/router';
 import { getRegisterById } from '../../utils/getRegiterById';
 import { updateRegister } from '../../utils/updateRegister';
+import { deleteRegister } from '../../utils/deleteRegister';
 
 const InitialRegisters: IRegisters[] = [
   {
@@ -30,7 +31,7 @@ export default function (){
     const [cpf, setCpf] = useState('');
     const [city, setCity] = useState('');
     const [regionState, setRegionState] = useState('');
-    const [userId, setUserId] = useState('');
+    const [registerId, setRegisterId] = useState('');
     
     const [showDangerAlert, setShowDangerAlert] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
@@ -51,7 +52,7 @@ export default function (){
             setCpf(register.CPF);
             setCity(register.City);
             setRegionState(register.State);
-            setUserId(register.ID);
+            setRegisterId(register.ID);
         }, 1000)
     }
 
@@ -69,6 +70,13 @@ export default function (){
 
         setShowSuccessAlert(true);
             
+    }
+
+    function onDelete(){
+        deleteRegister(registerId);
+        console.log(registerId);
+        router.push('/');
+        
     }
 
     function checkInputValues(): boolean{
@@ -97,7 +105,7 @@ export default function (){
             CPF: cpf,
             City: city,
             State: regionState,
-            ID: userId
+            ID: registerId
         };
 
         return aNewRegister;
@@ -229,6 +237,7 @@ export default function (){
                                         bgHover: '#ff00009f',
                                         borderHover: 'none'
                                     }}
+                                    onClick={onDelete}
                                 />
                             </div>
                        </Alert>

@@ -2,10 +2,10 @@ import { firestore } from "./firebase";
 
 const ref = firestore.collection("tabela");
 
-export function updateRegister(register){
-    if(register && register != undefined){
+export function deleteRegister(register: string){
+    if(register && register != ''){
         ref
-        .doc(register.ID)
+        .doc(register)
         .delete()
         .catch((err) => {
             console.log(err);
