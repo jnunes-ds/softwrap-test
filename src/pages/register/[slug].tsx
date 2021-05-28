@@ -43,14 +43,8 @@ export default function (){
         setLoading(true)
     
         const slug = String(router.query.slug);
-        console.log(slug);
         
         const {register} = getRegisterById(slug);
-        if(register.Age > 0){
-            console.log('FOI!')
-        }else{
-            console.log('NÃO FOI!')
-        }
         
         setTimeout(() => {
             setName(register.Name);
