@@ -5,6 +5,7 @@ import Loader from "react-loader-spinner";
 
 import Button from '../components/Button';
 import { IRegisters } from '../types/IRegister';
+import Link from 'next/link';
 
 const InitialRegisters: IRegisters[] = [
   {
@@ -23,6 +24,8 @@ export default function Home() {
   const [showRegisters, setShowRegisters] = useState<IRegisters[]>(InitialRegisters);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  
+  const maxItems = 6;
 
   const {registers} = getRegisters();
 
@@ -31,8 +34,8 @@ export default function Home() {
   }
 
   function previousPage(){
-    let previous = currentIndex - 6;
-    if((currentIndex - 6) <= 0){
+    let previous = currentIndex - maxItems;
+    if((currentIndex - maxItems) <= 0){
       if(currentIndex === 0){
         return;
       }else{
@@ -45,9 +48,9 @@ export default function Home() {
   }
 
   function nextPage(){
-    let max = registers.length - 6;
-    let next = currentIndex + 6;
-    if((currentIndex + 6) >= max){
+    let max = registers.length - maxItems;
+    let next = currentIndex + maxItems;
+    if((currentIndex + maxItems) >= max){
       setCurrentIndex(max);
     }else{
       setCurrentIndex(next);
@@ -156,7 +159,7 @@ export default function Home() {
                       </td>
                   </tr>
                   )
-              : showRegisters.slice(currentIndex, currentIndex+6).map(register => {
+              : showRegisters.slice(currentIndex, (currentIndex + maxItems)).map(register => {
                 return(
                   <tr key={register.ID}>
                     <td className="name">{register.Name}</td>
@@ -165,7 +168,11 @@ export default function Home() {
                     <td>{register.CPF}</td>
                     <td>{register.City}</td>
                     <td>{register.State}</td>
-                    <td><a href="#">Editar</a></td>
+                    <td>
+                      <Link href={`/register/${register.ID}`}>
+                        <a href="#">Editar</a>
+                      </Link>
+                    </td>
                   </tr>
                 );
               })
@@ -173,7 +180,7 @@ export default function Home() {
             </tbody>
             <tfoot>
               <tr>
-                <td>Mostrando {currentIndex} até {currentIndex + 6} de {showRegisters.length} resultados</td>
+                <td>Mostrando {currentIndex} até {currentIndex + maxItems} de {showRegisters.length} resultados</td>
                 <td></td>
                 <td></td>
                 <td></td>

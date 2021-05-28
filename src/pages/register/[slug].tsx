@@ -7,19 +7,61 @@ import { postNewRegister } from "../../utils/postRegister";
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MaskedInput from 'react-text-mask';
+import { useRouter } from 'next/router';
+import { getRegisters } from "../../utils/getRegisters";
+import { getRegisterById } from '../../utils/getRegiterById';
 
+const InitialRegisters: IRegisters[] = [
+  {
+    Name: '',
+    Age: 0,
+    MaritalStatus: '',
+    CPF: '',
+    City: '',
+    State: '',
+    ID: ''
+  }
+];
 
-
-export default function (id: string){
+export default function (){
+    const [loading, setLoading] = useState(false);
+     
     const [name, setName] = useState('');
     const [age, setAge] = useState(0);
-    const [maritalStatus, setMaritalStatus] = useState('Solteiro(a)');
+    const [maritalStatus, setMaritalStatus] = useState('');
     const [cpf, setCpf] = useState('');
     const [city, setCity] = useState('');
-    const [regionState, setRegionState] = useState('AC');
-
+    const [regionState, setRegionState] = useState('');
+    
     const [showDangerAlert, setShowDangerAlert] = useState(false);
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+    
+    const router = useRouter();
+    
+    function getRegister(){
+        setLoading(true)
+    
+        const slug = String(router.query.slug);
+        console.log(slug);
+        
+        const {register} = getRegisterById(slug);
+        if(register.Age > 0){
+            console.log('FOI!')
+        }else{
+            console.log('NÃO FOI!')
+        }
+        
+        setTimeout(() => {
+            setName(register.Name);
+            setAge(register.Age);
+            setMaritalStatus(register.MaritalStatus);
+            setCpf(register.CPF);
+            setCity(register.City);
+            setRegionState(register.State);
+
+            setLoading(false);
+        }, 1000)
+    }
 
     function sendPost(){
         let checkInputs = checkInputValues();
@@ -135,6 +177,14 @@ export default function (id: string){
         }
     }, [showDangerAlert, showSuccessAlert]);
 
+    useEffect(() => {
+        getRegister();
+    }, [])
+    
+
+    if(loading){
+        return <h1>Loading...</h1>
+    }
 
     return (
         <Fragment>
@@ -290,6 +340,7 @@ export default function (id: string){
         </Fragment>
     );
 }
+
 
 const Container = styled.section`
     display: flex;
