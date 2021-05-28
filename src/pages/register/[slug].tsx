@@ -1,15 +1,14 @@
 import { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from '../../components/Button';
-import { IRegisters } from '../../types/IRegister';
-import { postNewRegister } from "../../utils/postRegister";
+import { IRegisters } from '../../types/IRegisters';
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MaskedInput from 'react-text-mask';
 import { useRouter } from 'next/router';
-import { getRegisterById } from '../../utils/getRegiterById';
-import { updateRegister } from '../../utils/updateRegister';
-import { deleteRegister } from '../../utils/deleteRegister';
+import { getRegisterById } from '../../utils/firebase';
+import { updateRegister } from '../../utils/firebase';
+import { deleteRegister } from '../../utils/firebase';
 
 const InitialRegisters: IRegisters[] = [
   {
@@ -112,7 +111,7 @@ export default function (){
     }
 
     const cpfNumberMask = [
-            /[1-9]/,
+            /[0-9]/,
             /\d/,
             /\d/,
             ".",

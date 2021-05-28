@@ -1,12 +1,12 @@
 import { Fragment, useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from '../components/Button';
-import { IRegisters } from '../types/IRegister';
 import { v4 as uuidv4} from 'uuid';
-import { postNewRegister } from "../utils/postRegister";
+import { postNewRegister } from "../utils/firebase";
 import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MaskedInput from 'react-text-mask';
+import { IRegisters } from "../types/IRegisters";
 
 
 
@@ -82,7 +82,7 @@ export default function (){
     }
 
     const cpfNumberMask = [
-            /[1-9]/,
+            /[0-9]/,
             /\d/,
             /\d/,
             ".",

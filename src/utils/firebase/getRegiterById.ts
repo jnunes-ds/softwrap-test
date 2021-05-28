@@ -1,4 +1,4 @@
-import { IRegisters } from "../types/IRegister";
+import { IRegisters } from "../../types/IRegisters";
 import { firestore } from "./firebase";
 
 const InitialRegisters: IRegisters[] = [
