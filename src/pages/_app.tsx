@@ -2,6 +2,7 @@ import { Header } from "../components/Header";
 import { createGlobalStyle } from 'styled-components';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useState } from 'react';
+import { BsJustify, BsX } from "react-icons/bs";
 
 
 function MyApp({ Component, pageProps }) {
@@ -14,12 +15,12 @@ function MyApp({ Component, pageProps }) {
           <div className={showMenu && 'hide'}>
             <button
               onClick={() => setShowMenu(true)}
-            >Mostrar</button>
+              ><BsJustify/></button>
           </div>
           <div className={!showMenu && 'hide'}>
             <button
               onClick={() => setShowMenu(false)}
-            >Esconder</button>
+            ><BsX /></button>
           </div>
         </div>
         <div className={!showMenu && 'hide'}>
@@ -49,6 +50,19 @@ const GlobalStyle = createGlobalStyle`
       height: 3rem;
       display: none;
 
+      div{
+        margin-right: 1rem;
+        
+        button{
+          width: 2rem;
+          height: 2rem;
+          font-size: 30px;
+          background-color: #282a35;
+          color: #fff;
+          border: none;
+          box-shadow: none;
+        }
+      }
     }
   
 
@@ -127,6 +141,15 @@ const GlobalStyle = createGlobalStyle`
     .hide{
       display: none;
     }
+
+    .Titulo{
+    border: 1px solid #E8E8E8;
+    padding: 1.5rem;
+    h1{
+      font-size: 1.5rem;
+      margin-left: 0;
+    }
+  }
       
   }
 `;
