@@ -7,7 +7,6 @@ import { Alert } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MaskedInput from 'react-text-mask';
 import { useRouter } from 'next/router';
-import { getRegisters } from "../../utils/getRegisters";
 import { getRegisterById } from '../../utils/getRegiterById';
 
 const InitialRegisters: IRegisters[] = [
