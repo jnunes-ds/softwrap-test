@@ -104,3 +104,39 @@ Dentro dessa pasta também há um index.ts para facilitar a importação dessas 
 Embora eu não seja (<i>Ainda! Estou estudando pra mudar isso.</i>) fluente em inglês, passando longe disso, é uma prática minha colocar todos os commits do git e comentários no código em inglês. 
 
 Essa regra foi quebrada nesse projeto e o motivo é simples: a entrevista foi feita em português e as instruções passadas em português. 
+
+#
+
+#### Possíeis melhorias
+
+Sendo um trabalho com um prazo não tão longo, não tenho como deixar de notar que existem coisas que eu faria diferente se o prazo fosse maior.
+
+#
+
+###### Requisições ao firestore:
+
+Houve uma certa "gambiarra" que fiz para que as páginas com as informações vindas do firestore. Uma vez que elas não estavam sendo renderizadas pelo fato de o estado receber as informações apenas APÓS a renderização, eu estabeleci que determinadas requisições seriam feitas dentro de um setTimeOut de um segundo (Partindo do pressuposto que não demoraria mais que isso para conseguir as informações do servidor).
+
+Acredito haver uma proposta mais elegante para solucionar essa questão, possivelmente uma solução simples inclusive. Entretanto, após algumas horas de pesquisa sem sucesso, o medo de que a busca por outra alternativa afetasse o prazo da entrega me fez não prosseguir por esse caminho.
+
+#
+
+###### Comentários:
+Os commits do git não estão da melhor maneira, percebi também um que em alguns momentos há um hiato entre alguns commits. Isso não se deve a uma interrupção, mas ao fato de que em alguns momentos houve pesquisa e pequenas experimentações. Essas experiências geraram modificações nos arquivos, mas não tinha de verdade o que comentar.
+
+#
+
+###### Componente Button:
+Acostumado a utilizar o SASS no nextjs, utilizar o styled-components foi uma novidade para mim. Gostei bastante dessa tecnologia, entretanto, houve um incidente que só percebi mais tarde.
+
+O meu costume <b>no NextJS</b> era com arquivos scss, ao ver então o styled-components a minha mente associou imediatamente essa tecnologia ao StyleSheet do react native. Essa associação rendeu um problema que só fui perceber mais tarde. Na tentativa de definir a estilização do componente botão através de propriedades eu optei por criar um componente estilizado <b>dentro</b> da função Button.
+
+Isso não quebrou a aplicação, mas gerou um warning que eu só fui perceber quando já estava com o prazo muito apertado para pensar numa segunda solução. Portanto entra para a lista de coisas que eu melhoraria.
+
+#
+
+#### Conclusão
+
+Ainda que existam pontos de melhora considero a aplicação um sucesso uma vez que ela cumpre o que é solicitado: se comunicar com o firestore, criar registros de pessoas, visualizar a lista desses registros com paginação e um limite de 6 registros por página e, além disso, conseguir alterar e deletar registros que já foram criados.
+
+A experiência de cumprir essa missão foi muito animadora e deixou uma expectativa muito boa. Agradeço pela provocação feita para que eu pudesse passar por esse processo.
